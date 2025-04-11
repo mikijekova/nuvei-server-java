@@ -52,6 +52,7 @@ public abstract class SafechargeOrderBuilder<T extends SafechargeOrderBuilder<T>
     private String clientUniqueId;
     private AmountDetails amountDetails;
     private ShippingTrackingDetails shippingTrackingDetails;
+    private String digitalAssetType;
 
     /**
      * Adds amount to the request.
@@ -370,7 +371,7 @@ public abstract class SafechargeOrderBuilder<T extends SafechargeOrderBuilder<T>
                                 String customField11, String customField12, String customField13, String customField14, String customField15) {
 
         MerchantDetails merchantDetails = MerchantUtils.createMerchantDetailsFromParams(customField1, customField2, customField3,
-                customField4, customField5, customField6, customField7, customField8, customField9, customField10, customField11, 
+                customField4, customField5, customField6, customField7, customField8, customField9, customField10, customField11,
                 customField12, customField13, customField14, customField15);
 
         return addMerchantDetails(merchantDetails);
@@ -461,7 +462,7 @@ public abstract class SafechargeOrderBuilder<T extends SafechargeOrderBuilder<T>
         this.amountDetails = amountDetails;
         return (T) this;
     }
-    
+
     public T addAmountDetails(String totalHandling, String totalShipping, String totalTax, String totalDiscount) {
 
         AmountDetails amountDetails = new AmountDetails();
@@ -481,6 +482,18 @@ public abstract class SafechargeOrderBuilder<T extends SafechargeOrderBuilder<T>
     public T addShippingTrackingDetails(ShippingTrackingDetails shippingTrackingDetails) {
 
         this.shippingTrackingDetails = shippingTrackingDetails;
+        return (T) this;
+    }
+
+
+    /**
+     * Adds digitalAssetType to the request.
+     *
+     * @param digitalAssetType       Digital currency transaction identifier.
+     * @return this object
+     */
+    public T addDigitalAssetType(String digitalAssetType) {
+        this.digitalAssetType = digitalAssetType;
         return (T) this;
     }
 
@@ -512,6 +525,7 @@ public abstract class SafechargeOrderBuilder<T extends SafechargeOrderBuilder<T>
         safechargeOrderDetailsRequest.setClientUniqueId(clientUniqueId);
         safechargeOrderDetailsRequest.setAmountDetails(amountDetails);
         safechargeOrderDetailsRequest.setShippingTrackingDetails(shippingTrackingDetails);
+        safechargeOrderDetailsRequest.setDigitalAssetType(digitalAssetType);
 
         safechargeOrderDetailsRequest.setChecksum(
                 ChecksumUtils.calculateChecksum(safechargeOrderDetailsRequest, merchantInfo != null ? merchantInfo.getMerchantKey() : "",
